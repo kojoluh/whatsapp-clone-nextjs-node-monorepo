@@ -33,6 +33,16 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
+*.env
 
 # vercel
 .vercel
+
+# firebase config
+client/src/utils/FirebaseConfig*
+
+# postgresql
+server/prisma/
+server/whatsapp/
+server/logfile
