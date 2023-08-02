@@ -13,6 +13,7 @@ function login() {
   const router = useRouter();
 
   const [{}, dispatch] = useStateProvider();
+  
   const handleLogin = async () => {
     const provider = new GoogleAuthProvider();
     const { user: {displayName: name, email, photoUrl: profileImage} } = await signInWithPopup(firebaseAuth, provider);
