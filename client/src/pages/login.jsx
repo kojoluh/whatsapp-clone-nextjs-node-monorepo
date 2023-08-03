@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Image from 'next/image';
 import { FcGoogle } from 'react-icons/fc';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
@@ -12,16 +12,19 @@ import { reducerCases } from '@/context/constants';
 function login() {
   const router = useRouter();
 
-  const [{}, dispatch] = useStateProvider();
-  
+  const [{userInfo, isNewUser}, dispatch] = useStateProvider();
+
+  useEffect(() => {
+    console.log({userInfo, isNewUser})
+    if (userInfo?.id && !isNewUser) router.push('/');
+  }, [userInfo, isNewUser]);
+
   const handleLogin = async () => {
     const provider = new GoogleAuthProvider();
     const { user: {displayName: name, email, photoUrl: profileImage} } = await signInWithPopup(firebaseAuth, provider);
-    // console.log({name, email, profileImage});
     try {
       if (email) {
         const { data } = await axios.post(CHECK_USER_ROUTE, {email});
-        // console.log({data});
         if (!data.status) {
           dispatch({ type: reducerCases.SET_NEW_USER, isNewUser: true });
           dispatch({
@@ -34,6 +37,21 @@ function login() {
             }
           })
           router.push('/onboarding');
+        }
+        else {
+          const { id, email, name, profileImage, about: status } = data;
+          dispatch({ type: reducerCases.SET_NEW_USER, isNewUser: false });
+          dispatch({
+            type: reducerCases.SET_USER_INFO,
+            userInfo: {
+              id,
+              email,
+              name,
+              profileImage,
+              status
+            }
+          })
+          router.push('/');
         }
       }
     } catch(err) {
