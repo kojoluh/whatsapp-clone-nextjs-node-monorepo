@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import Image from 'next/image';
 import { FcGoogle } from 'react-icons/fc';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { firebaseAuth } from '@/utils/FirebaseConfig';
+import { firebaseAuth } from '@/utils/Firebase.config.js';
 import { CHECK_USER_ROUTE } from '@/utils/ApiRoutes';
 import axios from 'axios';
 import { useRouter } from 'next/router';
