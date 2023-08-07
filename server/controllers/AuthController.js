@@ -29,7 +29,6 @@ export const onboardUser = async (req, res, next) => {
     const user = await prisma.user.create({
         data,
     });
-    console.log(req.body, user);
     return res.json({ msg: "Success", status: true, user});
     } catch (err) {
         console.error(err)
