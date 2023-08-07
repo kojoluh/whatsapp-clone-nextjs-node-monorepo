@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 import { ONBOARD_USER_ROUTE } from '@/utils/ApiRoutes';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import { reducerCases } from '@/context/constants';
 
 function onboarding() {
   const router = useRouter();
@@ -23,7 +24,6 @@ function onboarding() {
     return true;
   }
   const handlerOnboardUser = async () => {
-    console.log('handlerOnboardUser: ', {userInfo, name, about, image})
     if (validateDetails()) {
       const email = userInfo.email;
       try {
@@ -33,6 +33,7 @@ function onboarding() {
           about,
           image
         });
+
         if (data.status) {
           dispatch({ type: reducerCases.SET_NEW_USER, isNewUser: false});
           dispatch({
