@@ -22,7 +22,7 @@ function Main() {
     if (!currentUser) setRedirectLogin(true);
     if (!userInfo && !userInfo?.email) {
       const { data } = await axios.post(CHECK_USER_ROUTE, {
-        email: currentUser.email
+        email: currentUser?.email
       })
       if (!data.status) {
         router.push("/login");
